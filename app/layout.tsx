@@ -21,9 +21,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" />
       </head>
-      <body className={inter.className}>
-        <ThemeProvider defaultTheme="light">{children}</ThemeProvider>
-      </body>
+      <body className={inter.className + " w-[80%] mx-auto"}>{children}</body>
     </html>
   );
 }

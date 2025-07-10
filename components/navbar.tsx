@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/components/theme-provider";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,14 +50,7 @@ export default function Navbar() {
       )}
     >
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => scrollToSection("home")}
-            className="text-2xl font-bold text-primary"
-          >
-            mikeunge
-          </button>
-
+        <div className="flex items-center">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
@@ -70,7 +62,6 @@ export default function Navbar() {
                 {link.name}
               </button>
             ))}
-            <ThemeToggle />
             <Button asChild>
               <a
                 href="/cv.pdf"
@@ -109,9 +100,6 @@ export default function Navbar() {
                   {link.name}
                 </button>
               ))}
-              <div className="py-2">
-                <ThemeToggle />
-              </div>
               <Button>
                 <a
                   href="/cv.pdf"
@@ -127,24 +115,5 @@ export default function Navbar() {
         </div>
       )}
     </header>
-  );
-}
-
-function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      aria-label="Toggle theme"
-    >
-      {theme === "light" ? (
-        <Moon className="h-5 w-5" />
-      ) : (
-        <Sun className="h-5 w-5" />
-      )}
-    </Button>
   );
 }

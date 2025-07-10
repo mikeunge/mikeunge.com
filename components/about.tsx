@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Code, Lightbulb, Rocket } from "lucide-react";
+import Image from "next/image";
 
 export default function About() {
   const fadeIn = {
@@ -12,136 +11,80 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section
+      id="about"
+      className="rounded-2xl shadow-lg p-8 md:p-12 mb-16 container mx-auto"
+    >
+      <h2 className="text-4xl font-bold text-center mb-12 dark:text-white text-gray-800">
+        Who I Am
+      </h2>
+      <div className="flex flex-col md:flex-row md:space-x-12 space-y-10 md:space-y-0">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           variants={fadeIn}
-          className="text-center mb-16"
+          className="md:w-1/2"
         >
-          <Badge variant="outline" className="mb-4">
-            About Me
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Who I Am</h2>
-          <div className="w-20 h-1 bg-primary mx-auto"></div>
+          <h3 className="text-2xl font-semibold dark:text-white text-gray-800 mb-4">
+            A Passionate Developer
+          </h3>
+          <p className="text-gray-600 leading-relaxed mb-6">
+            I am a dedicated Software & DevOps Engineer with a strong passion
+            for crafting efficient, scalable, and maintainable software
+            solutions. My journey in technology has been driven by a continuous
+            desire to learn and apply cutting-edge practices to real-world
+            problems.
+          </p>
+          <p className="text-gray-600 leading-relaxed">
+            With a solid foundation in both development and operations, I thrive
+            in environments where I can bridge the gap between code and
+            infrastructure, ensuring seamless deployment and robust system
+            performance.
+          </p>
         </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            variants={fadeIn}
-          >
-            <h3 className="text-2xl font-bold mb-4">A Passionate Developer</h3>
-            <p className="text-muted-foreground mb-6">
-              I'm a full-stack developer and DevOps engineer with a love for
-              building scalable, resilient and efficient systems. With a strong
-              foundation in backend development, automation, and infrastructure,
-              I thrive on turning complex technical challenges into streamlined,
-              real-world solutions.
-            </p>
-            <p className="text-muted-foreground mb-6">
-              My journey into software began with a fascination for how things
-              work behind the scenes — from systems and servers to clean,
-              well-architected code. Over the years, I've built up experience
-              across backend engineering, platform tooling, system
-              administration, and application management, giving me a
-              well-rounded perspective on both development and operations.
-            </p>
-            <p className="text-muted-foreground">
-              Whether it's optimizing pipelines, creating automations/tools, or
-              collaborating closely with teams to bring ideas to life, I'm
-              always exploring ways to improve performance and drive meaningful
-              impact through technology.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 gap-6">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              variants={fadeIn}
-            >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Code className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-semibold mb-2">Clean Code</h4>
-                      <p className="text-muted-foreground">
-                        I write maintainable, scalable, and efficient code
-                        following best practices and industry standards.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              variants={fadeIn}
-            >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Lightbulb className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-semibold mb-2">
-                        Problem Solver
-                      </h4>
-                      <p className="text-muted-foreground">
-                        I enjoy tackling complex challenges and finding elegant
-                        solutions through creative thinking.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              variants={fadeIn}
-            >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-3 rounded-full">
-                      <Rocket className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-semibold mb-2">
-                        Fast Learner
-                      </h4>
-                      <p className="text-muted-foreground">
-                        I quickly adapt to new technologies and environments,
-                        constantly expanding my skill set.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          variants={fadeIn}
+          className="md:w-1/2"
+        >
+          <h3 className="text-2xl font-semibold dark:text-white text-gray-800 mb-4">
+            What I Do Best
+          </h3>
+          <ul className="space-y-4 text-gray-600">
+            <li className="flex items-start">
+              <span className="text-blue-500 mr-3 text-xl">🚀</span>
+              <span>
+                Building scalable microservices with modern frameworks.
+              </span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-500 mr-3 text-xl">⚙️</span>
+              <span>Automating CI/CD pipelines for faster deployments.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-500 mr-3 text-xl">☁️</span>
+              <span>
+                Designing and implementing cloud-native architectures (AWS,
+                GCP).
+              </span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-500 mr-3 text-xl">🛠️</span>
+              <span>Optimizing system performance and reliability.</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-blue-500 mr-3 text-xl">💡</span>
+              <span>
+                Solving complex technical challenges with innovative solutions.
+              </span>
+            </li>
+          </ul>
+        </motion.div>
       </div>
     </section>
   );

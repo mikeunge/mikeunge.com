@@ -1,28 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Github, Instagram, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Hero() {
-  const [text, setText] = useState("");
   const [imageSrc, setImageSrc] = useState("/profile.webp");
-  const fullText = "Software & DevOps Engineer";
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let i = 0;
-    const typingInterval = setInterval(() => {
-      if (i < fullText.length) {
-        setText(fullText.substring(0, i + 1));
-        i++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 100);
-
-    return () => clearInterval(typingInterval);
+    setMounted(true);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -43,141 +31,71 @@ export default function Hero() {
     );
   };
 
+  const fadeInUp = mounted ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 };
+  const fadeInScale = mounted
+    ? { opacity: 1, scale: 1 }
+    : { opacity: 1, scale: 1 };
+
   return (
-    <section id="home" className="relative pt-32 pb-20 md:pt-40 md:pb-32">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+    <section
+      id="home"
+      className="flex flex-col items-center justify-center text-left py-20 md:py-32 container mx-auto px-6 max-w-4xl"
+    >
+      {/* Main Content */}
+      <motion.div
+        initial={mounted ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+        animate={fadeInUp}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="max-w-3xl w-full"
+      >
+        <div className="flex items-start mb-8">
+          <div
+            className="w-24 h-24 rounded-full overflow-hidden cursor-pointer"
+            onClick={handleImageClick}
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Hi, I'm <span className="text-primary">Mike!</span>
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-medium text-muted-foreground mb-6">
-              <span className="text-foreground">{text}</span>
-              <span className="animate-blink">|</span>
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-lg">
-              I'm passionate about building scalable software that boosts
-              productivity and delivers real business value through robust
-              applications and automation.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                className="group"
-                onClick={() => scrollToSection("projects")}
-              >
-                View My Work
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => scrollToSection("contact")}
-              >
-                Contact Me
-              </Button>
-            </div>
-
-            <div className="flex gap-4 mt-8">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                asChild
-              >
-                <a
-                  href="https://github.com/mikeunge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                asChild
-              >
-                <a
-                  href="https://linkedin.com/in/mikeunge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                asChild
-              >
-                <a
-                  href="https://instagram.com/mikeunge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-              </Button>
-            </div>
-          </motion.div>
-          {/* Main profile bubble with image */}
-          <div className="flex justify-center md:block group relative -mb-24 md:mb-0">
-            <div className="bg-gradient-to-br from-primary/20 to-primary/5 rounded-full w-48 h-48 md:w-72 md:h-72 flex items-center justify-center relative md:absolute md:right-40 md:-top-40">
-              <div className="bg-muted rounded-full overflow-hidden w-40 h-40 md:w-56 md:h-56">
-                <motion.div
-                  key={imageSrc}
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-full h-full"
-                >
-                  <Image
-                    src={imageSrc}
-                    width={250}
-                    height={250}
-                    alt="mikeunge"
-                    className="w-full h-full object-cover filter grayscale transition duration-500 group-hover:filter-none group-hover:cursor-pointer"
-                    onClick={handleImageClick}
-                  />
-                </motion.div>
-              </div>
-            </div>
+            <Image
+              src={imageSrc}
+              width={96}
+              height={96}
+              alt="Mike's Profile"
+              className="w-full h-full object-cover"
+              priority
+            />
           </div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative aspect-square max-w-md mx-auto"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full"></div>
-            <div className="absolute inset-4 bg-muted rounded-full overflow-hidden">
-              <img
-                src="/placeholder.svg?height=400&width=400"
-                alt="mikeunge"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </motion.div>
         </div>
-      </div>
+        <h1 className="text-2xl md:text-4xl font-bold leading-tight text-foreground mb-1 text-left">
+          Hey, I'm Mike.
+        </h1>
+        <h2 className="text-2xl md:text-4xl font-bold leading-tight text-foreground mb-4 text-left">
+          Software & DevOps Engineer.
+        </h2>
 
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 hidden md:block">
-        <button
-          onClick={() => scrollToSection("about")}
-          className="animate-bounce"
-        >
-          <ArrowRight className="h-6 w-6 transform rotate-90" />
-        </button>
-      </div>
+        <p className="text-lg text-muted-foreground max-w-2xl text-left">
+          I'm passionate about building scalable software that boosts
+          productivity and delivers real business value through robust
+          applications and automation.
+        </p>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+          <Button
+            className="bg-black hover:bg-gray-800 text-white py-6 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
+            onClick={() => scrollToSection("contact")}
+          >
+            Call me
+          </Button>
+
+          <Button
+            variant="outline"
+            className="bg-green-50 text-green-700 border-green-200 py-6 rounded-xl text-lg font-semibold shadow-lg hover:cursor-default hover:bg-green-50 hover:text-green-700"
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              Open to Opportunities
+            </div>
+          </Button>
+        </div>
+      </motion.div>
     </section>
   );
 }

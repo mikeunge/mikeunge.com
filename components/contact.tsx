@@ -1,29 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { Mail, MapPin, Phone, Github, Linkedin, Instagram } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -63,209 +54,128 @@ export default function Contact() {
     setFormData({
       name: "",
       email: "",
-      subject: "",
       message: "",
     });
     setIsSubmitting(false);
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="h-6 w-6 text-primary" />,
-      title: "Email",
-      value: "mikeunge@protonmail.com",
-      link: "mailto:mikeunge@protonmail.com",
-    },
-    {
-      icon: <Phone className="h-6 w-6 text-primary" />,
-      title: "Phone",
-      value: "+43 (664) 547 3887",
-      link: "tel:+436645473887",
-    },
-    {
-      icon: <MapPin className="h-6 w-6 text-primary" />,
-      title: "Location",
-      value: "Vienna, Austria",
-      link: null,
-    },
-  ];
-
   return (
-    <section id="contact" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          variants={fadeIn}
-          className="text-center mb-16"
-        >
-          <Badge variant="outline" className="mb-4">
-            Contact
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-primary mx-auto"></div>
-        </motion.div>
+    <section id="contact" className="mb-16 container mx-auto px-6 mt-20">
+      <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+          Get In Touch
+        </h2>
+        <div className="flex flex-col md:flex-row md:space-x-12 space-y-10 md:space-y-0">
+          {/* Contact Form */}
+          <div className="md:w-2/3">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <Label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Name
+                </Label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Email
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="your.email@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Message
+                </Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Hi Mike, I'd like to discuss..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition-all duration-300 text-lg font-semibold transform hover:-translate-y-1"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            variants={fadeIn}
-            className="lg:col-span-2"
-          >
-            <Card>
-              <CardContent className="p-6">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Your Name</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder="Max Mustermann"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Your Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="max.mustermann@example.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      placeholder="Project Inquiry"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="I'd like to discuss a project..."
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            variants={fadeIn}
-          >
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <Card key={index}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary/10 p-3 rounded-full">
-                        {info.icon}
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold mb-1">
-                          {info.title}
-                        </h4>
-                        {info.link ? (
-                          <a
-                            href={info.link}
-                            className="text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            {info.value}
-                          </a>
-                        ) : (
-                          <p className="text-muted-foreground">{info.value}</p>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-
-              <Card className="mt-8">
-                <CardContent className="p-6">
-                  <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
-                  <div className="flex gap-4">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                      asChild
-                    >
-                      <a
-                        href="https://linkedin.com/in/mikeunge"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                      asChild
-                    >
-                      <a
-                        href="https://instagram.com/mikeunge"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Instagram className="h-5 w-5" />
-                      </a>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="rounded-full"
-                      asChild
-                    >
-                      <a
-                        href="https://github.com/mikeunge"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-5 w-5" />
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Contact Info */}
+          <div className="md:w-1/3 bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-inner">
+            <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6">
+              Contact Information
+            </h3>
+            <div className="space-y-6 text-gray-600 dark:text-gray-400">
+              <div className="flex items-center">
+                <MapPin className="w-6 h-6 mr-3 text-blue-500" />
+                <span>Neunkirchen, Lower Austria, Austria</span>
+              </div>
+              <div className="flex items-center">
+                <Mail className="w-6 h-6 mr-3 text-blue-500" />
+                <a
+                  href="mailto:mikeunge@protonmail.com"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  mikeunge@protonmail.com
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Linkedin className="w-6 h-6 mr-3 text-blue-500" />
+                <a
+                  href="https://linkedin.com/in/mikeunge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  LinkedIn/in/mikeunge
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Github className="w-6 h-6 mr-3 text-blue-500" />
+                <a
+                  href="https://github.com/mikeunge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blue-600 transition-colors duration-300"
+                >
+                  GitHub/mikeunge
+                </a>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

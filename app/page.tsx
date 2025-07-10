@@ -17,15 +17,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main>
+      <main className="pt-20">
         <Hero />
         <About />
         <TechStack />
         <Projects />
-        {/* 
-          Disabled for now, wait for pictures and a 4th/5th
-          <Testimonials />
-         */}
         <Contact />
       </main>
       <Footer />

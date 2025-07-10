@@ -19,7 +19,6 @@ import Image from "next/image";
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -31,145 +30,45 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          variants={fadeIn}
-          className="text-center mb-16"
-        >
-          <Badge variant="outline" className="mb-4">
-            Portfolio
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Featured Projects
-          </h2>
-          <div className="w-20 h-1 bg-primary mx-auto"></div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              variants={fadeIn}
-            >
-              <Card
-                className={`group h-full cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                  expandedProject === project.id ? "ring-2 ring-primary" : ""
-                }`}
-                onClick={() =>
-                  setExpandedProject(
-                    expandedProject === project.id ? null : project.id
-                  )
-                }
-              >
-                <CardContent className="p-0">
-                  <div className="relative overflow-hidden">
-                    <Image
-                      width={500}
-                      height={300}
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full aspect-video object-cover transition-all duration-300 opacity-100 group-hover:opacity-40"
-                    />
-                    <div className="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t dark:from-background/90 dark:to-background/20 from-background/40 to-background/5">
-                      <h3 className="text-xl font-bold mb-2">
-                        {project.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm">
-                        {project.shortDescription}
-                      </p>
-                    </div>
-                  </div>
-
-                  <AnimatePresence>
-                    {expandedProject === project.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="p-6 border-t"
-                      >
-                        <div className="space-y-4">
-                          <div className="flex flex-wrap gap-2">
-                            {project.tags.map((tag, i) => (
-                              <Badge key={i} variant="secondary">
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-
-                          <div className="space-y-2">
-                            <h4 className="font-semibold">Key Features:</h4>
-                            <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-                              {project.features.map((feature, i) => (
-                                <li key={i}>{feature}</li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="flex flex-col md:flex-row gap-4 pt-2">
-                            {project.githubLink && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  window.open(project.githubLink, "_blank");
-                                }}
-                              >
-                                <Github className="h-4 w-4 mr-2" />
-                                Github
-                              </Button>
-                            )}
-                            {project.websiteLink && (
-                              <Button
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  window.open(project.websiteLink, "_blank");
-                                }}
-                              >
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                Website
-                              </Button>
-                            )}
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleSelectProject(project);
-                              }}
-                            >
-                              Learn More
-                            </Button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <div className="p-4 text-center">
-                    <ChevronDown
-                      className={`w-6 h-6 mx-auto transition-transform duration-300 ${
-                        expandedProject === project.id ? "rotate-180" : ""
-                      }`}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+    <section id="projects" className="mb-16 container mx-auto px-6 mt-20">
+      <h2 className="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+        Featured Projects
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((project, index) => (
+          <motion.div
+            key={project.id}
+            onClick={() => handleSelectProject(project)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            variants={fadeIn}
+            className="block bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 cursor-pointer"
+          >
+            <Image
+              src={
+                project.image ||
+                "https://placehold.co/600x400/e0e7ff/3b82f6?text=Project"
+              }
+              alt={project.title}
+              width={600}
+              height={400}
+              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {project.title}
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {project.shortDescription}
+              </p>
+              <span className="inline-block mt-4 text-blue-600 font-medium group-hover:underline">
+                View Details →
+              </span>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       {selectedProject && (
@@ -191,9 +90,11 @@ export default function Projects() {
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
-              <img
+              <Image
                 src={selectedProject.image || "/placeholder.svg"}
                 alt={selectedProject.title}
+                width={800}
+                height={600}
                 className="w-full rounded-md object-cover aspect-video"
               />
               <p className="text-muted-foreground">
