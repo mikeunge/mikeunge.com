@@ -73,7 +73,7 @@ export default function Navbar() {
             <ThemeToggle />
             <Button asChild>
               <a
-                href="/cv.pdf"
+                href="/documents/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 download
@@ -114,7 +114,7 @@ export default function Navbar() {
               </div>
               <Button>
                 <a
-                  href="/cv.pdf"
+                  href="/documents/cv.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   download

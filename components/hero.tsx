@@ -39,7 +39,9 @@ export default function Hero() {
 
   const handleImageClick = () => {
     setImageSrc((prevSrc) =>
-      prevSrc === "/profile.webp" ? "/profile-anime.webp" : "/profile.webp"
+      prevSrc === "/images/profile.webp"
+        ? "/images/profile-anime.webp"
+        : "/images/profile.webp"
     );
   };
 
