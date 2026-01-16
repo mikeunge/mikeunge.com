@@ -47,12 +47,18 @@ jobs:
           mkdir -p out
           touch out/.nojekyll
 
-      - name: Deploy to FTP server
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local_path: "./out/"
-          remote_path: "./public_html/"
-          sftpArgs: "-o ConnectTimeout=5"
+      - name: Create SFTP batch script
+        run: |
+          cat > sftp_commands.txt << 'EOF'
+          -mkdir _next
+          -mkdir _next/static
+          -mkdir _next/static/chunks
+          -mkdir _next/static/media
+          -mkdir images
+          -mkdir _not-found
+          put -r out/* ./
+          EOF
+
+      - name: Deploy to FTP server via SFTP
+        run: |
+          sshpass -p "${{ secrets.FTP_PASSWORD }}" sftp -oBatchMode=no -b sftp_commands.txt -o StrictHostKeyChecking=no -o ConnectTimeout=5 ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}
