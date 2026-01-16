@@ -43,7 +43,9 @@ jobs:
         run: pnpm build
 
       - name: Add .nojekyll file
-        run: touch out/.nojekyll
+        run: |
+          mkdir -p out
+          touch out/.nojekyll
 
       - name: Deploy to FTP server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
